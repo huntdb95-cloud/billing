@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>New Quote Request</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 0; background-color: #f0f4f8; }
+    header { background-color: #004080; padding: 20px; text-align: center; }
+    header img { max-height: 80px; }
+    h2 { color: #004080; text-align: center; margin-top: 20px; }
+    .toolbar { max-width: 650px; margin: 10px auto 0; padding: 0 20px; text-align: center; }
+    #translateBtn {
+      background: #e0a800; color: #000; border: none; border-radius: 4px;
+      padding: 10px 14px; cursor: pointer;
+    }
+    #translateBtn:hover { background: #c48800; }
+    form {
+      max-width: 650px; margin: 20px auto; padding: 20px;
+      border: 1px solid #ccc; border-radius: 8px; background: #ffffff;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+    label { display: block; margin-top: 12px; font-weight: bold; color: #333; }
+    input, select {
+      width: 100%; padding: 8px; margin-top: 6px; border: 1px solid #ccc; border-radius: 4px;
+    }
+    /* Make customer info inputs narrower */
+    input[type="text"], input[type="tel"], input[type="email"] {
+      max-width: 400px;
+    }
+    .checkbox-group { margin-top: 10px; }
+    .checkbox-group label { font-weight: normal; display: block; margin: 6px 0; }
+    #lienholderField { display: none; margin-top: 10px; }
+    button[type="submit"] {
+      margin-top: 20px; padding: 12px 20px; background: #004080; color: white;
+      border: none; border-radius: 4px; cursor: pointer; font-size: 16px;
+    }
+    button[type="submit"]:hover { background: #0066cc; }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="logo.png" alt="Company Logo">
+  </header>
+
+  <h2 data-i18n="formTitle">New Quote Request</h2>
+
+  <div class="toolbar">
+    <button type="button" id="translateBtn" data-i18n="translateBtn">Translate to Spanish</button>
+  </div>
+
+  <form action="https://formspree.io/f/meoykwea" method="POST">
+    <!-- Customer Info -->
+    <label for="name"><span data-i18n="labelName">Customer Name</span></label>
+    <input type="text" id="name" name="customer_name" required>
+
+    <label for="phone"><span data-i18n="labelPhone">Phone Number</span></label>
+    <input type="tel" id="phone" name="phone_number" required>
+
+    <label for="email"><span data-i18n="labelEmail">Email Address</span></label>
+    <input type="email" id="email" name="email_address" required>
+
+    <!-- Coverage Type -->
+    <label for="coverageType"><span data-i18n="labelCoverage">Coverage Type</span></label>
+    <select id="coverageType" name="coverage_type" required>
+      <option value="" data-i18n="optSelect">-- Select --</option>
+      <option value="auto" data-i18n="optAuto">Auto</option>
+      <option value="equipment" data-i18n="optEquipment">Equipment</option>
+      <option value="property" data-i18n="optProperty">Property</option>
+      <option value="other" data-i18n="optOther">Other</option>
+    </select>
+
+    <!-- Deductible -->
+    <label for="deductible"><span data-i18n="labelDeductible">Deductible</span></label>
+    <select id="deductible" name="deductible" required>
+      <option value="" data-i18n="optSelect">-- Select --</option>
+      <option value="50">$50</option>
+      <option value="100">$100</option>
+      <option value="250">$250</option>
+      <option value="500">$500</option>
+      <option value="1000">$1,000</option>
+      <option value="2500">$2,500</option>
+    </select>
+
+    <!-- Lienholder -->
+    <div class="checkbox-group">
+      <label>
+        <input type="checkbox" id="lienholderCheckbox" name="lienholder">
+        <span data-i18n="labelLien">Lienholder</span>
+      </label>
+    </div>
+
+    <!-- Lienholder Name -->
+    <div id="lienholderField">
+      <label for="lienholderName"><span data-i18n="labelLienName">Lienholder Name</span></label>
+      <input type="text" id="lienholderName" name="lienholder_name">
+    </div>
+
+    <!-- Submit -->
+    <button type="submit" id="submitBtn" data-i18n="submitBtn">Submit Quote Request</button>
+  </form>
+
+  <script>
+    // Toggle lienholder name field
+    const lienholderCheckbox = document.getElementById('lienholderCheckbox');
+    const lienholderField = document.getElementById('lienholderField');
+    const lienholderNameInput = document.getElementById('lienholderName');
+    lienholderCheckbox.addEventListener('change', function() {
+      const show = this.checked;
+      lienholderField.style.display = show ? 'block' : 'none';
+      lienholderNameInput.required = show;
+    });
+
+    // Translation dictionaries
+    const english = {
+      formTitle: "New Quote Request",
+      translateBtn: "Translate to Spanish",
+      labelName: "Customer Name",
+      labelPhone: "Phone Number",
+      labelEmail: "Email Address",
+      labelCoverage: "Coverage Type",
+      optSelect: "-- Select --",
+      optAuto: "Auto",
+      optEquipment: "Equipment",
+      optProperty: "Property",
+      optOther: "Other",
+      labelDeductible: "Deductible",
+      labelLien: "Lienholder",
+      labelLienName: "Lienholder Name",
+      submitBtn: "Submit Quote Request"
+    };
+
+    const spanish = {
+      formTitle: "Solicitud de Cotización Nueva",
+      translateBtn: "Traducir al Inglés",
+      labelName: "Nombre del Cliente",
+      labelPhone: "Número de Teléfono",
+      labelEmail: "Correo Electrónico",
+      labelCoverage: "Tipo de Cobertura",
+      optSelect: "-- Seleccionar --",
+      optAuto: "Automóvil",
+      optEquipment: "Equipo",
+      optProperty: "Propiedad",
+      optOther: "Otro",
+      labelDeductible: "Deducible",
+      labelLien: "Acreedor Prendario",
+      labelLienName: "Nombre del Acreedor Prendario",
+      submitBtn: "Enviar Solicitud de Cotización"
+    };
+
+    let isSpanish = false;
+
+    function applyTranslations(dict) {
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (dict[key]) {
+          el.textContent = dict[key];
+        }
+      });
+    }
+
+    document.getElementById('translateBtn').addEventListener('click', function() {
+      isSpanish = !isSpanish;
+      applyTranslations(isSpanish ? spanish : english);
+    });
+  </script>
+</body>
+</html>
